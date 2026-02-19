@@ -1,10 +1,22 @@
 src_file,target_layer,suffix,filter_sql,style_file
-geb01_f,Verwaltungsgebiete,_F,,verwaltung.qml
-ver01_l,Strassennetz,_L,OBJART=42003,strassen.qml
-ver03_l,Schienennetz,_L,,schienen.qml
-gew01_f,Gewaesser_Flaechen,_F,,gewaesser_f.qml
-gew01_l,Gewaesser_Achsen,_L,,gewaesser_l.qml
-sie01_f,Siedlungsraeume,_F,,siedlung.qml
-sie05_p,Hochpunkte_Gebaeude,_P,,gebaeude.qml
-veg02_f,Waldflaechen,_F,,wald.qml
-rel01_l,Hoehenlinien,_L,OBJART=61008,relief.qml
+# --- VERWALTUNG ---
+geb01_f,Staat,_F,OBJART = 75001,staat.qml
+geb01_f,Bundeslaender,_F,OBJART = 75005,laender.qml
+geb01_f,Landkreise,_F,OBJART = 75007,kreise.qml
+geb01_f,Gemeinden,_F,OBJART = 75003,gemeinden.qml
+# --- VERKEHR ---
+ver01_l,Autobahnen,_L,BRS = 1100,autobahn.qml
+ver01_l,Fernstrassen,_L,BRS = 1200,bundesstr.qml
+ver01_l,Landstrassen,_L,BRS = 1300,landstr.qml
+ver01_l,Kreisstrassen,_L,BRS = 1400,kreisstr.qml
+ver03_l,Schienennetz,_L,,bahn.qml
+ver06_p,Flughaefen,_P,,airports.qml
+# --- GEWÄSSER ---
+gew01_f,Seen_Gewaesserflaechen,_F,OBJART = 44006,seen.qml
+gew01_l,Fluesse_Bachachsen,_L,OBJART = 44001,fluesse.qml
+# --- SIEDLUNG & VEGETATION ---
+sie01_f,Siedlungsflaechen,_F,,siedlung.qml
+veg02_f,Waldflaechen,_F,OBJART = 43002,wald.qml
+veg01_f,Landwirtschaft,_F,OBJART = 43001,acker.qml
+# --- RELIEF ---
+rel01_l,Hoehenlinien,_L,,relief.qml
