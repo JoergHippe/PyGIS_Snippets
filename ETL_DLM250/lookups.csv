@@ -1,0 +1,22 @@
+kategorie,code,klartext
+OBJART,75003,Gemeinde
+OBJART,75005,Bundesland
+OBJART,75007,Kreis/Stadtkreis
+OBJART,75011,Verwaltungsgemeinschaft
+OBJART,42003,Strassenachse
+OBJART,42014,Bahnstrecke
+OBJART,44001,Fliessgewaesser
+OBJART,44006,Stehendes Gewaesser
+OBJART,43002,Wald
+OBJART,52001,Ortslage
+OBJART,61008,Hoehenlinie
+OBJART,31001,Gebaeude
+OBJART,51001,Turm
+BRS,1100,Autobahn
+BRS,1200,Bundesstrasse
+BRS,1300,Landesstrasse
+BRS,1400,Kreisstrasse
+BRS,1500,Gemeindestrasse
+WDM,1301,Widmung Autobahn
+WDM,1302,Widmung Bundesstrasse
+WDM,1303,Widmung Landesstrasse
