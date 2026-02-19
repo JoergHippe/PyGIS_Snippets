@@ -1,0 +1,734 @@
+================= Inhaltsangabe Ebenendatensatz AAA - DLM250 =============================
+
+Geodaten des Bundesamts für Kartographie und Geodäsie
+
+Objektreport erstellt am 27.03.2025 11:23:25
+
+Standardattribute in jeder Ebene:
+
+        Name        Bedeutung
+        LAND        landeskennung
+        MODELLART   modellartenkennung
+        OBJART      objektart
+        OBJART_TXT  objektartText
+        OBJID       eindeutiger Objektidentifikator
+        HDU_X       hatDirektUntenExistiert
+        BEGINN      lebenszeitintervallBeginnt
+        ENDE        lebenszeitintervallEndet
+        BEMERKUNG   Bemerkungen zum Objekt, kein offizielles AAA-Attribut
+
+
+
+--------------------------------------------------------------------------------------------
+ 1. Ebene: geb01_f
+    Geometrietyp: Fläche
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        11110   75003   AX_KommunalesGebiet
+        9       75004   AX_Gebiet_Nationalstaat
+        34      75005   AX_Gebiet_Bundesland
+        21      75006   AX_Gebiet_Regierungsbezirk
+        433     75007   AX_Gebiet_Kreis
+        1245    75011   AX_Gebiet_Verwaltungsgemeinschaft
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ADF         artDerFestlegung
+        BEZ_NAT     bezeichnungNationalstaat
+        BEZ_LAN     bezeichnung Land
+        BEZ_RBZ     bezeichnung Regierungsbezirk
+        BEZ_KRS     bezeichnung Kreis
+        BEZ_VWG     bezeichnungVerwaltungsgemeinschaft
+        BEZ_GEM     bezeichnung Gemeinde
+        RGS         regionalsprache
+        SCH         schluessel
+
+--------------------------------------------------------------------------------------------
+ 2. Ebene: geb01_l
+    Geometrietyp: Linie
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        34457   75009   AX_Gebietsgrenze
+
+
+     Attribute:
+
+        Name        Bedeutung
+        AGZ         artDerGebietsgrenze
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 3. Ebene: geb02_f
+    Geometrietyp: Fläche
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        736     74001   AX_Landschaft
+        474     74004   AX_Insel
+
+
+     Attribute:
+
+        Name        Bedeutung
+        LTP         landschaftstyp
+        NAM         name
+        RGS         regionalsprache
+
+--------------------------------------------------------------------------------------------
+ 4. Ebene: geb03_f
+    Geometrietyp: Fläche
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        1531    71006   AX_NaturUmweltOderBodenschutzrecht
+        136     71011   AX_SonstigesRecht
+        44      71012   AX_Schutzzone
+
+
+     Attribute:
+
+        Name        Bedeutung
+        OBJART_Z    Objektart ZUSO
+        OBJID_Z     Objekt-ID ZUSO
+        ADF         artDerFestlegung
+        BEZ         bezeichnung
+        NAM         name
+        SGN         nummerDesSchutzgebietes
+
+--------------------------------------------------------------------------------------------
+ 5. Ebene: gew01_f
+    Geometrietyp: Fläche
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        1211    44001   AX_Fliessgewaesser
+        659     44005   AX_Hafenbecken
+        14733   44006   AX_StehendesGewaesser
+        156     44007   AX_Meer
+
+
+     Attribute:
+
+        Name        Bedeutung
+        OBJART_Z    Objektart ZUSO
+        OBJID_Z     Objekt-ID ZUSO
+        FKT         funktion
+        GWK         gewaesserkennzahl
+        HYD         hydrologischesMerkmal
+        NAM         name
+        RGS         regionalsprache
+        SFK         schifffahrtskategorie
+        SKZ         seekennzahl
+        WDM         widmung
+        WSG         ***** Kein offizielles AAA-Attribut (DLM250) *****
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 6. Ebene: gew01_l
+    Geometrietyp: Linie
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        75524   44004   AX_Gewaesserachse
+
+
+     Attribute:
+
+        Name        Bedeutung
+        OBJART_Z    Objektart ZUSO
+        OBJID_Z     Objekt-ID ZUSO
+        BRG         breiteDesGewaessers
+        FKT         funktion
+        FLR         fliessrichtung
+        GWK         gewaesserkennzahl
+        HYD         hydrologischesMerkmal
+        NAM         name
+        RGS         regionalsprache
+        SFK         schifffahrtskategorie
+        WDM         widmung
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 7. Ebene: gew02_f
+    Geometrietyp: Fläche
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        652     55001   AX_Gewaessermerkmal
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        NAM         name
+        RGS         regionalsprache
+        ZNM         zweitname
+
+--------------------------------------------------------------------------------------------
+ 8. Ebene: gew02_p
+    Geometrietyp: Punkt
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        603     55001   AX_Gewaessermerkmal
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        NAM         name
+        RGS         regionalsprache
+        ZNM         zweitname
+
+--------------------------------------------------------------------------------------------
+ 9. Ebene: gew03_l
+    Geometrietyp: Linie
+
+    Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        10541   57003   AX_Gewaesserstationierungsachse
+
+
+     Attribute:
+
+        Name        Bedeutung
+        AGA         artDerGewaesserachse
+        FLR         fliessrichtung
+        GWK         gewaesserkennzahl
+        NAM         name
+        RGS         regionalsprache
+        SFK         schifffahrtskategorie
+        ZNM         zweitname
+
+--------------------------------------------------------------------------------------------
+ 10. Ebene: rel01_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        2877    61003   AX_DammWallDeich
+        34012   61008   AX_Hoehenlinie
+
+
+     Attribute:
+
+        Name        Bedeutung
+        FKT         funktion
+        HHL         hoeheVonHoehenlinie
+        HHO         objekthoehe
+        NAM         name
+
+--------------------------------------------------------------------------------------------
+ 11. Ebene: rel01_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        808     61005   AX_Hoehleneingang
+
+
+     Attribute:
+
+        Name        Bedeutung
+        NAM         name
+        ZNM         zweitname
+
+--------------------------------------------------------------------------------------------
+ 12. Ebene: rel02_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        1241    62030   AX_Strukturlinie3D
+
+
+     Attribute:
+
+        Name        Bedeutung
+        OBJART_Z    Objektart ZUSO
+        OBJID_Z     Objekt-ID ZUSO
+        ART         art
+        HHO         objekthoehe
+
+--------------------------------------------------------------------------------------------
+ 13. Ebene: rel02_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        10452   62020   AX_Punkt3D
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        HOEHE       ***** Kein offizielles AAA-Attribut (DLM250) *****
+
+--------------------------------------------------------------------------------------------
+ 14. Ebene: sie01_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        20123   52001   AX_Ortslage
+
+
+     Attribute:
+
+        Name        Bedeutung
+        NAM         name
+        RGS         regionalsprache
+
+--------------------------------------------------------------------------------------------
+ 15. Ebene: sie01_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        26908   52001   AX_Ortslage
+
+
+     Attribute:
+
+        Name        Bedeutung
+        NAM         name
+        RGS         regionalsprache
+
+--------------------------------------------------------------------------------------------
+ 16. Ebene: sie02_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        5205    41002   AX_IndustrieUndGewerbeflaeche
+        84      41003   AX_Halde
+        1371    41005   AX_TagebauGrubeSteinbruch
+        613     41007   AX_FlaecheBesondererFunktionalerPraegung
+        2721    41008   AX_SportFreizeitUndErholungsflaeche
+        254     41009   AX_Friedhof
+        20453   41010   AX_Siedlungsflaeche
+
+
+     Attribute:
+
+        Name        Bedeutung
+        AGT         abbaugut
+        FKT         funktion
+        NAM         name
+        RGS         regionalsprache
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 17. Ebene: sie03_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        280     51002   AX_BauwerkOderAnlageFuerIndustrieUndGewerbe
+
+
+     Attribute:
+
+        Name        Bedeutung
+        BWF         bauwerksfunktion
+        HHO         objekthoehe
+        NAM         name
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 18. Ebene: sie03_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        454     51004   AX_Transportanlage
+        12959   51005   AX_Leitung
+
+
+     Attribute:
+
+        Name        Bedeutung
+        BWF         bauwerksfunktion
+
+--------------------------------------------------------------------------------------------
+ 19. Ebene: sie03_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        11384   51002   AX_BauwerkOderAnlageFuerIndustrieUndGewerbe
+        678     51006   AX_BauwerkOderAnlageFuerSportFreizeitUndErholung
+        190     51007   AX_HistorischesBauwerkOderHistorischeEinrichtung
+        553     51009   AX_SonstigesBauwerkOderSonstigeEinrichtung
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ATP         archaeologischerTyp
+        BWF         bauwerksfunktion
+        HHO         objekthoehe
+        NAM         name
+        SPO         sportart
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 20. Ebene: sie04_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        184     52002   AX_Hafen
+        30      52005   AX_Testgelaende
+
+
+     Attribute:
+
+        Name        Bedeutung
+        NAM         name
+
+--------------------------------------------------------------------------------------------
+ 21. Ebene: sie04_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        231     52003   AX_Schleuse
+
+
+     Attribute:
+
+        Name        Bedeutung
+        KON         konstruktionsmerkmalBauart
+        NAM         name
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 22. Ebene: sie04_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        713     52002   AX_Hafen
+        403     52003   AX_Schleuse
+
+
+     Attribute:
+
+        Name        Bedeutung
+        KON         konstruktionsmerkmalBauart
+        NAM         name
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 23. Ebene: sie05_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        19776   31001   AX_Gebaeude
+        2367    51001   AX_Turm
+
+
+     Attribute:
+
+        Name        Bedeutung
+        BWF         bauwerksfunktion
+        GFK         gebaeudefunktion
+        HHO         objekthoehe
+        NAM         name
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 24. Ebene: veg01_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        3039    43001   AX_Landwirtschaft
+
+
+     Attribute:
+
+        Name        Bedeutung
+        NAM         name
+        VEG         vegetationsmerkmal
+
+--------------------------------------------------------------------------------------------
+ 25. Ebene: veg02_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        40389   43002   AX_Wald
+
+
+     Attribute:
+
+        Name        Bedeutung
+        NAM         name
+        RGS         regionalsprache
+        NTZ         nutzung
+
+--------------------------------------------------------------------------------------------
+ 26. Ebene: veg03_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        908     43004   AX_Heide
+        1906    43005   AX_Moor
+        1148    43006   AX_Sumpf
+        979     43007   AX_UnlandVegetationsloseFlaeche
+
+
+     Attribute:
+
+        Name        Bedeutung
+        FKT         funktion
+        NAM         name
+        OFM         oberflaechenmaterial
+
+--------------------------------------------------------------------------------------------
+ 27. Ebene: veg04_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        3532    54001   AX_Vegetationsmerkmal
+
+
+     Attribute:
+
+        Name        Bedeutung
+        BWS         bewuchs
+        NAM         name
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 28. Ebene: ver01_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        359077  42003   AX_Strassenachse
+
+
+     Attribute:
+
+        Name        Bedeutung
+        OBJART_Z    Objektart ZUSO
+        OBJID_Z     Objekt-ID ZUSO
+        BEZ         bezeichnung
+        BRF         breiteDerFahrbahn
+        BVB         besondereVerkehrsbedeutung
+        FSZ         anzahlDerFahrstreifen
+        FTR         fahrbahntrennung
+        IBD         internationaleBedeutung
+        WDM         widmung
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 29. Ebene: ver02_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        10623   42008   AX_Fahrwegachse
+        138     53003   AX_WegPfadSteig
+
+
+     Attribute:
+
+        Name        Bedeutung
+        FKT         funktion
+        NAM         name
+        ZNM         zweitname
+
+--------------------------------------------------------------------------------------------
+ 30. Ebene: ver03_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        171     42010   AX_Bahnverkehr
+
+
+     Attribute:
+
+        Name        Bedeutung
+
+--------------------------------------------------------------------------------------------
+ 31. Ebene: ver03_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        21872   42014   AX_Bahnstrecke
+        107     53005   AX_SeilbahnSchwebebahn
+
+
+     Attribute:
+
+        Name        Bedeutung
+        BKT         bahnkategorie
+        ELK         elektrifizierung
+        GLS         anzahlDerStreckengleise
+        NAM         name
+        NRB         nummerDerBahnstrecke
+        SPW         spurweite
+        VKD         ***** Kein offizielles AAA-Attribut (DLM250) *****
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 32. Ebene: ver04_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        297     42015   AX_Flugverkehr
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        BEZ         bezeichnung
+        NAM         name
+        NTZ         nutzung
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 33. Ebene: ver05_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        190     57002   AX_SchifffahrtslinieFaehrverkehr
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        NAM         name
+
+--------------------------------------------------------------------------------------------
+ 34. Ebene: ver06_f
+     Geometrietyp: Fläche
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        15      53001   AX_BauwerkImVerkehrsbereich
+        81      53009   AX_BauwerkImGewaesserbereich
+
+
+     Attribute:
+
+        Name        Bedeutung
+        BWF         bauwerksfunktion
+        NAM         name
+        RGS         regionalsprache
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 35. Ebene: ver06_l
+     Geometrietyp: Linie
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        30521   53001   AX_BauwerkImVerkehrsbereich
+        593     53007   AX_Flugverkehrsanlage
+        8008    53009   AX_BauwerkImGewaesserbereich
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        BEZ         bezeichnung
+        BRO         breiteDesObjekts
+        BWF         bauwerksfunktion
+        NAM         name
+        RGS         regionalsprache
+        OFM         oberflaechenmaterial
+        ZNM         zweitname
+        ZUS         zustand
+
+--------------------------------------------------------------------------------------------
+ 36. Ebene: ver06_p
+     Geometrietyp: Punkt
+
+     Objektarten:
+
+        Anzahl  OBJART  Bedeutung
+        3374    53002   AX_Strassenverkehrsanlage
+        8778    53004   AX_Bahnverkehrsanlage
+        927     53007   AX_Flugverkehrsanlage
+        426     53008   AX_EinrichtungenFuerDenSchiffsverkehr
+        3069    53009   AX_BauwerkImGewaesserbereich
+
+
+     Attribute:
+
+        Name        Bedeutung
+        ART         art
+        BEZ         bezeichnung
+        BFK         bahnhofskategorie
+        BKT         bahnkategorie
+        BRO         breiteDesObjekts
+        BWF         bauwerksfunktion
+        NAM         name
+        OFM         oberflaechenmaterial
+        RGS         regionalsprache
+        VKD         ***** Kein offizielles AAA-Attribut (DLM250) *****
+        ZNM         zweitname
+        ZUS         zustand
