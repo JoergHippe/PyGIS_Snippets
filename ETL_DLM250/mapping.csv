@@ -1,0 +1,10 @@
+src_file,target_layer,suffix,filter_sql,style_file
+geb01_f,Verwaltungsgebiete,_F,,verwaltung.qml
+ver01_l,Strassennetz,_L,OBJART=42003,strassen.qml
+ver03_l,Schienennetz,_L,,schienen.qml
+gew01_f,Gewaesser_Flaechen,_F,,gewaesser_f.qml
+gew01_l,Gewaesser_Achsen,_L,,gewaesser_l.qml
+sie01_f,Siedlungsraeume,_F,,siedlung.qml
+sie05_p,Hochpunkte_Gebaeude,_P,,gebaeude.qml
+veg02_f,Waldflaechen,_F,,wald.qml
+rel01_l,Hoehenlinien,_L,OBJART=61008,relief.qml
