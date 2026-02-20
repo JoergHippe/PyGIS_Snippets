@@ -22,67 +22,93 @@ Fachliche Referenz (Fuehrungsquelle):
 
 ## Anwendungen
 
-Typische Einsatzfaelle:
+Ziel: In wenigen Schritten von DLM250-Shapefiles zu einem fertigen GeoPackage kommen.
 
-- Aufbau einer konsolidierten DLM250-Datenbasis fuer QGIS-Projekte.
-- Wiederholbarer Batch-Import neuer Datenstaende.
-- Vorbereitung fuer kategoriesierte Symbolisierung ueber Attribute (statt hartem Layer-Splitting pro Typ).
-
-### Voraussetzungen
+### 1. Voraussetzungen
 
 - Python 3.10+
-- GDAL/`ogr2ogr` im Systempfad
-- Keine externen Python-Abhaengigkeiten noetig (Standardbibliothek)
+- GDAL/`ogr2ogr`
+- Dateien:
+  - `ETL_DLM250/mapping.csv`
+  - `ETL_DLM250/lookups.csv`
+  - DLM250-Shapefiles (`*.shp`, `*.dbf`, `*.shx`, ...)
 
-### Konfigurationsdateien
+### 2. Richtige Shell starten (Windows)
 
-1. `mapping.csv`
+Empfohlen: **OSGeo4W Shell** oder **QGIS Shell**.
 
-- Steuert Quelllayer (`src_file`), Ziellayer (`target_layer`), Geometrietyp (`suffix`) und optionalen SQL-Filter (`filter_sql`).
-- `suffix` bleibt der Geometrietyp-Indikator (`_F`, `_L`, `_P`).
+Dann testen:
 
-1. `lookups.csv`
+```bash
+python --version
+ogr2ogr --version
+```
 
-- Enthaelt Code-zu-Klartext-Zuordnungen, insbesondere fuer `OBJART`.
-- Wird als `referenz_lookups` in das Ziel-GPKG uebernommen.
+Beide Befehle muessen funktionieren.
 
-### CLI-Nutzung
+Hinweis:
+- In OSGeo4W/QGIS-Shell `python` verwenden (nicht `py`).
 
-Skript:
+### 3. In den Projektordner wechseln
 
-- `ETL_DLM250/DLM250-to-GPKG.py`
+Beispiel:
 
-Gesamten Quellordner verarbeiten:
+```bash
+cd "d:\Coding\GitHub Repos\PyGIS_Snippets"
+```
+
+### 4. Skript einmal aufrufbar pruefen
+
+```bash
+python ETL_DLM250/DLM250-to-GPKG.py --help
+```
+
+Wenn das klappt, ist die Laufzeitumgebung korrekt.
+
+### 5. Vollen Import starten (normaler Fall)
 
 ```bash
 python ETL_DLM250/DLM250-to-GPKG.py \
   -m ETL_DLM250/mapping.csv \
   -l ETL_DLM250/lookups.csv \
-  -o out/Deutschland.gpkg \
-  -s <pfad-zum-shp-ordner> \
+  -o ETL_DLM250/out/Deutschland.gpkg \
+  -s "<PFAD_ZUM_DLM250_SHP_ORDNER>" \
   -f
 ```
 
-Einzelnes Shapefile verarbeiten:
+Was passiert dabei:
+- liest `mapping.csv` und `lookups.csv`
+- importiert alle gefundenen Layer
+- ueberspringt fehlende Quellen mit Warnung
+- schreibt `referenz_lookups` ins GPKG
+- meldet am Ende Fehler/Warnungen gesammelt
+
+### 6. Einzeldatei testen (schneller Check)
 
 ```bash
 python ETL_DLM250/DLM250-to-GPKG.py \
   -m ETL_DLM250/mapping.csv \
   -l ETL_DLM250/lookups.csv \
-  -o out/Test.gpkg \
-  -i <pfad-zu/geb01_f.shp>
+  -o ETL_DLM250/out/Test.gpkg \
+  -i "<PFAD_ZU_EINER_SHP_DATEI>"
 ```
 
-Parameter:
+### 7. Parameter kurz erklaert
 
-| Parameter   | Kurzform | Beschreibung |
-|-------------|----------|--------------|
-| `--mapping` | `-m` | Pfad zur Mapping-CSV |
-| `--lookups` | `-l` | Pfad zur Lookup-CSV |
-| `--output`  | `-o` | Ziel-GeoPackage |
-| `--source`  | `-s` | Quellordner mit Shapefiles |
-| `--input`   | `-i` | Einzelnes Shapefile |
-| `--force`   | `-f` | Vorhandenes GPKG ohne Rueckfrage ueberschreiben |
+| Parameter   | Kurzform | Bedeutung |
+|-------------|----------|-----------|
+| `--mapping` | `-m` | Steuerdatei mit Quell-/Ziellayern |
+| `--lookups` | `-l` | Lookup-Tabelle fuer Klartext |
+| `--output`  | `-o` | Ziel-GeoPackage (`.gpkg`) |
+| `--source`  | `-s` | Quellordner fuer Batch-Import |
+| `--input`   | `-i` | Einzelne Shapefile fuer Testlauf |
+| `--force`   | `-f` | Ziel-GPKG ohne Rueckfrage loeschen/neu erstellen |
+
+### 8. Typische Stolpersteine
+
+- `ogr2ogr` nicht gefunden: falsche Shell, nicht in OSGeo4W/QGIS gestartet.
+- `Keine passenden Eingabedaten`: `--source` falsch oder Dateinamen passen nicht zu `src_file` in `mapping.csv`.
+- Nur Teilimport: einige Quellen fehlen im `--source`-Ordner (wird als Warnliste ausgegeben).
 
 ## Entwicklung
 
@@ -95,7 +121,7 @@ Parameter:
 
 - Bei Append wird `-addfields` genutzt, damit abweichende Felder in Sammellayern nicht zum Abbruch fuehren.
 
-5. Optionales Schreiben von Styles in `layer_styles` (wenn `style_file` gesetzt und Datei vorhanden).
+1. Optionales Schreiben von Styles in `layer_styles` (wenn `style_file` gesetzt und Datei vorhanden).
 2. Schreiben der Lookup-Referenztabelle `referenz_lookups`.
 
 ### Best Practices
@@ -116,6 +142,11 @@ Parameter:
 `ogr2ogr` wird nicht gefunden:
 
 - GDAL nicht im PATH. Unter Windows am einfachsten in der OSGeo4W-Shell bzw. QGIS-Shell ausfuehren.
+
+Falsches Python wird verwendet:
+
+- Wenn mehrere Python-Versionen installiert sind, mit `py -3` starten.
+- In VS Code den Interpreter der gewuenschten Umgebung waehlen.
 
 Umlaute/Encoding-Probleme:
 
