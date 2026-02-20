@@ -1,9 +1,11 @@
 import argparse
 import csv
+import logging
 import os
 import sqlite3
 import subprocess
 import sys
+from collections import Counter
 from datetime import datetime
 from typing import TypedDict
 
@@ -34,6 +36,39 @@ def _required_columns_exist(columns: list[str], required: set[str]) -> tuple[boo
     existing = {column.strip() for column in columns}
     missing = sorted(required - existing)
     return len(missing) == 0, missing
+
+
+def setup_logger(log_path: str) -> logging.Logger:
+    logger = logging.getLogger("dlm250")
+    logger.setLevel(logging.INFO)
+    logger.handlers.clear()
+
+    file_handler = logging.FileHandler(log_path, mode="w", encoding="utf-8")
+    file_handler.setLevel(logging.WARNING)
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(logging.Formatter("%(message)s"))
+    console_handler.addFilter(lambda record: record.levelno != logging.WARNING)
+
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    return logger
+
+
+def collect_ogr_messages(
+    text: str, warning_counter: Counter[str], error_messages: list[str]
+) -> None:
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+        lower = line.lower()
+        if lower.startswith("warning"):
+            warning_counter[line] += 1
+        elif lower.startswith("error"):
+            error_messages.append(line)
 
 
 def _read_lookups_csv(path: str) -> list[LookupRow]:
@@ -107,7 +142,7 @@ def build_sql_query(src_file_name: str, filter_sql: str, lookups: list[LookupRow
                 for row in objart_entries
             ]
         )
-        select_parts.append(f"CASE OBJART {objart_cases} ELSE 'Unbekannt' END AS objart_txt")
+        select_parts.append(f"CASE OBJART {objart_cases} ELSE 'Unbekannt' END AS objart_klartext")
 
     query = f"SELECT {', '.join(select_parts)} FROM \"{src_file_name}\""
     if _is_non_empty(filter_sql):
@@ -174,6 +209,7 @@ def main() -> None:
     parser.add_argument("-s", "--source", help="Quell-ORDNER (verarbeitet alle Schichten laut Mapping)")
     parser.add_argument("-i", "--input", help="Einzelne Quell-DATEI (.shp)")
     parser.add_argument("-f", "--force", action="store_true", help="Vorhandenes GPKG ohne Nachfrage ueberschreiben")
+    parser.add_argument("--log", help="Optionaler Pfad zur Logdatei")
 
     args = parser.parse_args()
 
@@ -181,11 +217,22 @@ def main() -> None:
         print("Fehler: Bitte entweder --source (Ordner) oder --input (Datei) angeben.")
         sys.exit(1)
 
+    output_dir = os.path.dirname(os.path.abspath(args.output))
+    if _is_non_empty(output_dir) and not os.path.exists(output_dir):
+        try:
+            os.makedirs(output_dir, exist_ok=True)
+        except OSError as error:
+            print(f"Fehler: Ausgabeverzeichnis kann nicht erstellt werden: {output_dir} ({error})")
+            sys.exit(1)
+
+    log_path = args.log or f"{os.path.splitext(args.output)[0]}.log"
+    logger = setup_logger(log_path)
+
     if os.path.exists(args.output):
         if args.force or input(f"Datei {args.output} ueberschreiben? (y/n): ").lower() == "y":
             os.remove(args.output)
         else:
-            print("Abbruch.")
+            logger.warning("Abbruch.")
             return
 
     mapping_rows = _read_mapping_csv(args.mapping)
@@ -196,7 +243,7 @@ def main() -> None:
     missing_sources: list[str] = []
     if args.input:
         if not os.path.exists(args.input):
-            print(f"Fehler: Eingabedatei nicht gefunden: {args.input}")
+            logger.error(f"Fehler: Eingabedatei nicht gefunden: {args.input}")
             sys.exit(1)
         base_name = os.path.splitext(os.path.basename(args.input))[0]
         matches = [row for row in mapping_rows if row["src_file"] == base_name]
@@ -204,7 +251,7 @@ def main() -> None:
             to_process.append((args.input, row))
     else:
         if args.source is None:
-            print("Fehler: --source fehlt.")
+            logger.error("Fehler: --source fehlt.")
             sys.exit(1)
         for row in mapping_rows:
             full_path = os.path.join(args.source, row["src_file"] + ".shp")
@@ -214,24 +261,26 @@ def main() -> None:
                 missing_sources.append(full_path)
 
     if missing_sources:
-        print("\nWarnung: Fehlende Quell-Shapefiles (werden uebersprungen):")
+        logger.warning("Warnung: Fehlende Quell-Shapefiles (werden uebersprungen):")
         for path in missing_sources:
-            print(f"- {path}")
+            logger.warning(f"- {path}")
 
     if not to_process:
-        print("Fehler: Keine passenden Eingabedaten laut Mapping gefunden.")
+        logger.error("Fehler: Keine passenden Eingabedaten laut Mapping gefunden.")
         sys.exit(1)
 
     output_exists = os.path.exists(args.output)
     missing_styles: list[str] = []
     conversion_errors: list[str] = []
+    warning_counter: Counter[str] = Counter()
+    ogr_error_lines: list[str] = []
+    processed_layers = 0
     for full_path, row in to_process:
         base_name = row["src_file"]
         target_name = f"{row['target_layer']}{row['suffix']}"
         sql = build_sql_query(base_name, row["filter_sql"], lookup_rows)
 
-        print(f"--> Erstelle: {target_name} aus {os.path.basename(full_path)}")
-
+        logger.info(f"--> Erstelle: {target_name} aus {os.path.basename(full_path)}")
         cmd: list[str] = ["ogr2ogr", "-f", "GPKG"]
         if output_exists:
             cmd.extend(["-update", "-append", "-addfields"])
@@ -242,10 +291,10 @@ def main() -> None:
                 full_path,
                 "-nln",
                 target_name,
+                "-dialect",
+                "SQLite",
                 "-sql",
                 sql,
-                "-lco",
-                "ENCODING=UTF-8",
                 "-lco",
                 "SPATIAL_INDEX=YES",
                 "-nlt",
@@ -256,8 +305,11 @@ def main() -> None:
         )
 
         try:
-            subprocess.run(cmd, check=True)
+            process = subprocess.run(cmd, check=True, capture_output=True, text=True)
+            if process.stderr:
+                collect_ogr_messages(process.stderr, warning_counter, ogr_error_lines)
             output_exists = True
+            processed_layers += 1
             if _is_non_empty(row["style_file"]):
                 style_path = row["style_file"]
                 if not os.path.isabs(style_path):
@@ -266,32 +318,50 @@ def main() -> None:
                 if not style_ok:
                     missing_styles.append(f"{target_name}: {style_path}")
         except subprocess.CalledProcessError as error:
+            if error.stderr:
+                collect_ogr_messages(str(error.stderr), warning_counter, ogr_error_lines)
             message = f"{target_name}: {error}"
             conversion_errors.append(message)
-            print(f"Fehler bei {message}")
+            logger.error(f"Fehler bei {message}")
         except FileNotFoundError:
             message = "ogr2ogr wurde nicht gefunden (GDAL nicht im PATH)."
             conversion_errors.append(message)
-            print(f"Fehler: {message}")
+            logger.error(f"Fehler: {message}")
             break
 
     if output_exists:
         write_lookups_table(args.output, lookup_rows)
+
+    if warning_counter:
+        total_warnings = sum(warning_counter.values())
+        logger.warning("Warnungszusammenfassung (aggregiert):")
+        for warning, count in warning_counter.most_common():
+            logger.warning(f"{count}x {warning}")
+        logger.info(f"Hinweis: {total_warnings} Warnungen erkannt (Details in Logdatei).")
+
+    if ogr_error_lines:
+        logger.error("OGR-Fehlerdetails:")
+        for line in ogr_error_lines:
+            logger.error(f"- {line}")
+
     if conversion_errors:
-        print("\nImport-Fehlerzusammenfassung:")
+        logger.error("Import-Fehlerzusammenfassung:")
         for entry in conversion_errors:
-            print(f"- {entry}")
+            logger.error(f"- {entry}")
     if missing_styles:
-        print("\nStyle-Fehlerzusammenfassung (kein Abbruch):")
+        logger.warning("Style-Fehlerzusammenfassung (kein Abbruch):")
         for entry in missing_styles:
-            print(f"- Fehlende Style-Datei: {entry}")
+            logger.warning(f"- Fehlende Style-Datei: {entry}")
     if conversion_errors:
-        print(f"\nAbgeschlossen mit Fehlern. GPKG: {args.output}")
+        logger.error(f"Abgeschlossen mit Fehlern. GPKG: {args.output}. Log: {log_path}")
         sys.exit(1)
     if not output_exists:
-        print(f"\nAbgeschlossen ohne Datenimport. Keine GPKG-Datei erstellt: {args.output}")
+        logger.error(f"Abgeschlossen ohne Datenimport. Keine GPKG-Datei erstellt: {args.output}. Log: {log_path}")
         sys.exit(1)
-    print(f"\nFertig! GPKG: {args.output}")
+    logger.info(
+        f"Fertig: {processed_layers}/{len(to_process)} Layer verarbeitet. "
+        f"Status: fehlerfrei. Log: {log_path}"
+    )
 
 
 if __name__ == "__main__":

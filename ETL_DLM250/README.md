@@ -59,6 +59,12 @@ cd "d:\Coding\GitHub Repos\PyGIS_Snippets"
 
 ### 4. Skript einmal aufrufbar pruefen
 
+OSGeo4W/QGIS Shell (cmd):
+```bat
+python ETL_DLM250\DLM250-to-GPKG.py --help
+```
+
+PowerShell:
 ```bash
 python ETL_DLM250/DLM250-to-GPKG.py --help
 ```
@@ -67,12 +73,28 @@ Wenn das klappt, ist die Laufzeitumgebung korrekt.
 
 ### 5. Vollen Import starten (normaler Fall)
 
-```bash
-python ETL_DLM250/DLM250-to-GPKG.py \
-  -m ETL_DLM250/mapping.csv \
-  -l ETL_DLM250/lookups.csv \
-  -o ETL_DLM250/out/Deutschland.gpkg \
-  -s "<PFAD_ZUM_DLM250_SHP_ORDNER>" \
+OSGeo4W/QGIS Shell (cmd, einzeilig):
+```bat
+python ETL_DLM250\DLM250-to-GPKG.py -m ETL_DLM250\mapping.csv -l ETL_DLM250\lookups.csv -o ETL_DLM250\out\Deutschland.gpkg -s "<PFAD_ZUM_DLM250_SHP_ORDNER>" -f
+```
+
+OSGeo4W/QGIS Shell (cmd, mehrzeilig mit `^`):
+```bat
+python ETL_DLM250\DLM250-to-GPKG.py ^
+  -m ETL_DLM250\mapping.csv ^
+  -l ETL_DLM250\lookups.csv ^
+  -o ETL_DLM250\out\Deutschland.gpkg ^
+  -s "<PFAD_ZUM_DLM250_SHP_ORDNER>" ^
+  -f
+```
+
+PowerShell (mehrzeilig mit Backtick):
+```powershell
+python ETL_DLM250/DLM250-to-GPKG.py `
+  -m ETL_DLM250/mapping.csv `
+  -l ETL_DLM250/lookups.csv `
+  -o ETL_DLM250/out/Deutschland.gpkg `
+  -s "<PFAD_ZUM_DLM250_SHP_ORDNER>" `
   -f
 ```
 
@@ -80,16 +102,26 @@ Was passiert dabei:
 - liest `mapping.csv` und `lookups.csv`
 - importiert alle gefundenen Layer
 - ueberspringt fehlende Quellen mit Warnung
+- legt den Ausgabeordner aus `-o` bei Bedarf automatisch an
 - schreibt `referenz_lookups` ins GPKG
 - meldet am Ende Fehler/Warnungen gesammelt
+- schreibt ein Logfile neben das GPKG (Default: gleicher Name mit `.log`)
+- vorhandene Logdatei wird pro Lauf ueberschrieben
+- Loginhalt: nur Warnungen und Fehler (keine Erfolgs-Infos)
 
 ### 6. Einzeldatei testen (schneller Check)
 
-```bash
-python ETL_DLM250/DLM250-to-GPKG.py \
-  -m ETL_DLM250/mapping.csv \
-  -l ETL_DLM250/lookups.csv \
-  -o ETL_DLM250/out/Test.gpkg \
+OSGeo4W/QGIS Shell (cmd):
+```bat
+python ETL_DLM250\DLM250-to-GPKG.py -m ETL_DLM250\mapping.csv -l ETL_DLM250\lookups.csv -o ETL_DLM250\out\Test.gpkg -i "<PFAD_ZU_EINER_SHP_DATEI>"
+```
+
+PowerShell:
+```powershell
+python ETL_DLM250/DLM250-to-GPKG.py `
+  -m ETL_DLM250/mapping.csv `
+  -l ETL_DLM250/lookups.csv `
+  -o ETL_DLM250/out/Test.gpkg `
   -i "<PFAD_ZU_EINER_SHP_DATEI>"
 ```
 
@@ -103,10 +135,12 @@ python ETL_DLM250/DLM250-to-GPKG.py \
 | `--source`  | `-s` | Quellordner fuer Batch-Import |
 | `--input`   | `-i` | Einzelne Shapefile fuer Testlauf |
 | `--force`   | `-f` | Ziel-GPKG ohne Rueckfrage loeschen/neu erstellen |
+| `--log`     | -    | Optionaler Pfad zur Logdatei |
 
 ### 8. Typische Stolpersteine
 
 - `ogr2ogr` nicht gefunden: falsche Shell, nicht in OSGeo4W/QGIS gestartet.
+- Mehrzeilige Befehle schlagen fehl: in cmd `^` statt `\` verwenden; in PowerShell Backtick statt `\`.
 - `Keine passenden Eingabedaten`: `--source` falsch oder Dateinamen passen nicht zu `src_file` in `mapping.csv`.
 - Nur Teilimport: einige Quellen fehlen im `--source`-Ordner (wird als Warnliste ausgegeben).
 
