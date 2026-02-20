@@ -1,22 +1,74 @@
-kategorie,code,klartext
-OBJART,75003,Gemeinde
-OBJART,75005,Bundesland
-OBJART,75007,Kreis/Stadtkreis
-OBJART,75011,Verwaltungsgemeinschaft
-OBJART,42003,Strassenachse
-OBJART,42014,Bahnstrecke
-OBJART,44001,Fliessgewaesser
-OBJART,44006,Stehendes Gewaesser
-OBJART,43002,Wald
-OBJART,52001,Ortslage
-OBJART,61008,Hoehenlinie
-OBJART,31001,Gebaeude
-OBJART,51001,Turm
-BRS,1100,Autobahn
-BRS,1200,Bundesstrasse
-BRS,1300,Landesstrasse
-BRS,1400,Kreisstrasse
-BRS,1500,Gemeindestrasse
-WDM,1301,Widmung Autobahn
-WDM,1302,Widmung Bundesstrasse
-WDM,1303,Widmung Landesstrasse
+"kategorie","code","klartext"
+"OBJART","31001","Gebaeude"
+"OBJART","41002","Industrie- und Gewerbeflaeche"
+"OBJART","41003","Halde"
+"OBJART","41005","Tagebau, Grube, Steinbruch"
+"OBJART","41007","Flaeche besonderer Praegung"
+"OBJART","41008","Sport-, Freizeit- und Erholungsflaeche"
+"OBJART","41009","Friedhof"
+"OBJART","41010","Siedlungsflaeche"
+"OBJART","42003","Strassenachse"
+"OBJART","42008","Fahrwegachse"
+"OBJART","42010","Bahnverkehr"
+"OBJART","42014","Bahnstrecke"
+"OBJART","42015","Flugverkehr"
+"OBJART","43001","Landwirtschaft"
+"OBJART","43002","Wald"
+"OBJART","43004","Heide"
+"OBJART","43005","Moor"
+"OBJART","43006","Sumpf"
+"OBJART","43007","Unland, vegetationslos"
+"OBJART","44001","Fliessgewaesser"
+"OBJART","44004","Gewaesserachse"
+"OBJART","44005","Hafenbecken"
+"OBJART","44006","Stehendes Gewaesser"
+"OBJART","44007","Meer"
+"OBJART","51001","Turm"
+"OBJART","51002","Bauwerk, Industrie und Gewerbe"
+"OBJART","51004","Transportanlage"
+"OBJART","51005","Leitung"
+"OBJART","51006","Bauwerk für Sport, Freizeit, Erholung"
+"OBJART","51007","Historisches Bauwerk"
+"OBJART","51009","Sonstiges Bauwerk"
+"OBJART","52001","Ortslage"
+"OBJART","52002","Hafen"
+"OBJART","52003","Schleuse"
+"OBJART","52005","Testgelaende"
+"OBJART","53001","Bauwerk im Verkehrsbereich"
+"OBJART","53002","Strassenverkehrsanlage"
+"OBJART","53003","Weg, Pfad, Steig"
+"OBJART","53004","Bahnverkehrsanlage"
+"OBJART","53005","Seilbahn, Schwebebahn"
+"OBJART","53007","Flugverkehrsanlage"
+"OBJART","53008","Einrichtung Schiffsverkehr"
+"OBJART","53009","Bauwerk im Gewaesserbereich"
+"OBJART","54001","Vegetationsmerkmal"
+"OBJART","55001","Gewaessermerkmal"
+"OBJART","57002","Schifffahrtslinie, Faehrverkehr"
+"OBJART","57003","Gewaesserstationierungsachse"
+"OBJART","61003","Damm, Wall, Deich"
+"OBJART","61005","Hoehleneingang"
+"OBJART","61008","Hoehenlinie"
+"OBJART","62020","Punkt 3D"
+"OBJART","62030","Strukturlinie 3D"
+"OBJART","71006","Natur-, Umwelt-, Bodenschutzrecht"
+"OBJART","71011","Sonstiges Recht"
+"OBJART","71012","Schutzzone"
+"OBJART","74001","Landschaft"
+"OBJART","74004","Insel"
+"OBJART","75003","Gemeinde"
+"OBJART","75004","Staatsgrenze"
+"OBJART","75005","Bundeslandgrenze"
+"OBJART","75006","Regierungsbezirksgrenze"
+"OBJART","75007","Kreisgrenze"
+"OBJART","75009","Gebietsgrenze"
+"OBJART","75011","Verwaltungsgemeinschaft"
+"BRS","1100","Autobahn"
+"BRS","1200","Bundesstrasse"
+"BRS","1300","Landesstrasse"
+"BRS","1400","Kreisstrasse"
+"BRS","1500","Gemeindestrasse"
+"WDM","1301","Widmung Autobahn"
+"WDM","1302","Widmung Bundesstrasse"
+"WDM","1303","Widmung Landesstrasse"
+"WDM","1304","Widmung Kreisstrasse"

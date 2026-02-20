@@ -1,22 +1,38 @@
 src_file,target_layer,suffix,filter_sql,style_file
 # --- VERWALTUNG ---
-geb01_f,Staat,_F,OBJART = 75001,staat.qml
-geb01_f,Bundeslaender,_F,OBJART = 75005,laender.qml
-geb01_f,Landkreise,_F,OBJART = 75007,kreise.qml
-geb01_f,Gemeinden,_F,OBJART = 75003,gemeinden.qml
+geb01_f,Verwaltung_Grenzen,_F,,
+geb01_l,Verwaltung_Grenzen,_L,,
+geb02_f,Verwaltung_Landschaften_Inseln,_F,,
+geb03_f,Verwaltung_Schutzgebiete,_F,,
 # --- VERKEHR ---
-ver01_l,Autobahnen,_L,BRS = 1100,autobahn.qml
-ver01_l,Fernstrassen,_L,BRS = 1200,bundesstr.qml
-ver01_l,Landstrassen,_L,BRS = 1300,landstr.qml
-ver01_l,Kreisstrassen,_L,BRS = 1400,kreisstr.qml
-ver03_l,Schienennetz,_L,,bahn.qml
-ver06_p,Flughaefen,_P,,airports.qml
-# --- GEWÄSSER ---
-gew01_f,Seen_Gewaesserflaechen,_F,OBJART = 44006,seen.qml
-gew01_l,Fluesse_Bachachsen,_L,OBJART = 44001,fluesse.qml
-# --- SIEDLUNG & VEGETATION ---
-sie01_f,Siedlungsflaechen,_F,,siedlung.qml
-veg02_f,Waldflaechen,_F,OBJART = 43002,wald.qml
-veg01_f,Landwirtschaft,_F,OBJART = 43001,acker.qml
-# --- RELIEF ---
-rel01_l,Hoehenlinien,_L,,relief.qml
+ver01_l,Verkehr_Strassennetz,_L,,
+ver02_l,Verkehr_Fahrwege_Wege,_L,,
+ver03_f,Verkehr_Bahn,_F,,
+ver03_l,Verkehr_Schienennetz,_L,,
+ver04_f,Verkehr_Flugverkehr,_F,,
+ver05_l,Verkehr_Schifffahrt,_L,,
+ver06_f,Verkehr_Bauwerke,_F,,
+ver06_l,Verkehr_Bauwerke,_L,,
+ver06_p,Verkehr_Bauwerke,_P,,
+# --- GEWAESSER ---
+gew01_f,Gewaesser_Seen,_F,,
+gew01_l,Gewaesser_Fluesse_Baeche,_L,,
+gew02_f,Gewaesser_Merkmale,_F,,
+gew02_p,Gewaesser_Merkmale,_P,,
+gew03_l,Gewaesser_Stationierung,_L,,
+# --- SIEDLUNG ---
+sie01_f,Siedlung_Ortslagen,_F,,
+sie01_p,Siedlung_Ortslagen,_P,,
+sie02_f,Siedlung_Industrie_Gewerbe,_F,,
+sie03_f,Siedlung_Bauwerke_Industrie,_F,,
+sie03_l,Siedlung_Transport_Leitungen,_L,,
+sie03_p,Siedlung_Bauwerke_Industrie,_P,,
+sie04_f,Siedlung_Hafen_Schleusen,_F,,
+sie04_l,Siedlung_Hafen_Schleusen,_L,,
+sie04_p,Siedlung_Hafen_Schleusen,_P,,
+sie05_p,Siedlung_Gebaeude_Tuerme,_P,,
+# --- VEGETATION ---
+veg01_f,Vegetation_Landwirtschaft,_F,,
+veg02_f,Vegetation_Wald,_F,,
+veg03_f,Vegetation_Heide_Moor_Sumpf_Unland,_F,,
+veg04_f,Vegetation_Merkmale,_F,,
